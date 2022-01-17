@@ -17,14 +17,13 @@ Description:configures the pins for the ultrasonic sensor
 ******************************************************************** */
 void configUltrasonicPorts()
 {
-	/* ECHO - input - port 2 */
-	DDRD &= ~(1<<U_ECHO_pin);
-	PORTD &= ~(1<<U_ECHO_pin);
+	/* ECHO - input - port ECHO_pin */
+	U_DDR_echo &= ~(1<<U_ECHO_pin);
+	U_Port_echo &= ~(1<<U_ECHO_pin);
 	
-	/* TRIG - output - port 7*/
-	DDRD |= (1<<U_PWR_pin) | (1<<U_TRIG_pin);
-	PORTD &= ~(1<<U_PWR_pin);
-	PORTD &= ~(1<<U_TRIG_pin); 
+	/* TRIG - output - port TRIG_pin */
+	U_DDR_trig |= (1<<U_TRIG_pin);
+	U_Port_trig &= ~(1<<U_TRIG_pin); 
 }
 
 /* *****************************************************************
@@ -70,9 +69,6 @@ Description:triggers measurements and plausibility checks
 	float dist = 0;
 	float distance_array[2];
 	float sum = 0;
-	
-	/* Turn on the ultrasonic sensor */
-	ULTR_PWR_ON; _delay_ms(200);
 		
 	/* re-measurements for confirmation of unexpected results */
 	for (uint8_t i = 0; i <= ULTRAS_ITER_MAX; i++)
@@ -114,9 +110,6 @@ Description:triggers measurements and plausibility checks
 		}
 	}
 
-	/* Turn off the ultrasonic sensor */
-	ULTR_PWR_OFF;
-
 	return distance;
  }
 
@@ -129,11 +122,11 @@ Description:Triggers the TRIG pin of the ultrasonic sensor
  void triggerUltrasonic()
  {
 		/* trigger ultrasonic */
-		PORTD |= (1<<U_TRIG_pin);
+		U_Port_trig |= (1<<U_TRIG_pin);
 		_delay_ms(20);
 
 		/* stop trigger ultrasonic */
-		PORTD &= ~(1<<U_TRIG_pin);
+		U_Port_trig &= ~(1<<U_TRIG_pin);
 		_delay_ms(20);
  }
 

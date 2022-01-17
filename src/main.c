@@ -15,21 +15,27 @@ volatile int f_wdt = 1;
 
 int main(void)
 {
+	/* Initialization */
+	init_ultrasonic();
+	initLCD();
+	uint8_t distance = 0;
+	uint8_t diagnostics = 0;
+	uint8_t iteration = 0;
+	
 	while( f_wdt == 1 )
 	{
-		uint8_t distance = 0;
-		uint8_t diagnostics = 0;
-		
+		iteration += 1;
 		/* Ultrasonic sensor */
-		init_ultrasonic();
 		distance = getDistance_main(&diagnostics);
 		
 		/* Display measurements */
-		displayLCD_main(1, "Distance = ", distance, " cm");
-		displayLCD_main(2, "DTC = ", diagnostics, "NONE");
+		displayLCD_main(1, "Iteration ", iteration, "NONE");
+		displayLCD_main(2, "Distance = ", distance, " cm");
+		displayLCD_main(3, "DTC = ", diagnostics, "NONE");
 		
 		/* Power management - processor sleep for energy reduction */
-		PwrMngmnt_main();
+		//PwrMngmnt_main();
+		_delay_ms(500);
 	}
 }
 
