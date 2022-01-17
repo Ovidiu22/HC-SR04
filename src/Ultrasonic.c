@@ -38,13 +38,7 @@ Description:configures the interrupts and enables the global interrupts
 	EICRA |= (1<<ISC00);
 	sei();
  }
-/*
-void disableInterrupts(void)
-{
-	EIMSK &= ~(1<<INT0);
-	EICRA &= ~(1<<ISC00);
-	cli();
-}*/
+
 /* *****************************************************************
 Name:		init_ultrasonic()
 Inputs:		none
@@ -83,8 +77,9 @@ Description:triggers measurements and plausibility checks
 			triggerUltrasonic();
 			distance_array[j] = getDistance();
 			sum +=distance_array[j];
-			_delay_ms(100);
+			_delay_ms(50);
 		}
+
 		dist = sum/2;
 		distance = dist;
 		
@@ -123,7 +118,7 @@ Description:Triggers the TRIG pin of the ultrasonic sensor
  {
 		/* trigger ultrasonic */
 		U_Port_trig |= (1<<U_TRIG_pin);
-		_delay_ms(20);
+		_delay_us(15);
 
 		/* stop trigger ultrasonic */
 		U_Port_trig &= ~(1<<U_TRIG_pin);
@@ -140,6 +135,7 @@ float getDistance()
 {
 	/* factor to be multiplied by pulse
 	f = speedOfSound (343 m/s) * 100 * 8 (prescale factor) / 2 (way-back) / F_CPU;  ( ~0.008575 ); */
-
-	return pulse * 0.008575;
+	/* distance = pulse * factor or
+	distance = pulse / (1/factor) */
+	return pulse / 116.618;
 }

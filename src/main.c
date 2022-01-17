@@ -18,6 +18,7 @@ int main(void)
 	/* Initialization */
 	
 	initLCD();
+	init_ultrasonic();
 	uint8_t distance = 0;
 	uint8_t diagnostics = 0;
 	uint8_t iteration = 0;
@@ -26,7 +27,6 @@ int main(void)
 	{
 		iteration += 1;
 		/* Ultrasonic sensor */
-		init_ultrasonic();
 		distance = getDistance_main(&diagnostics);
 		
 		/* Display measurements */
@@ -36,7 +36,6 @@ int main(void)
 		
 		/* Power management - processor sleep for energy reduction */
 		PwrMngmnt_main();
-		//_delay_ms(500);
 	}
 }
 
