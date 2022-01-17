@@ -36,14 +36,15 @@ Description:configures the interrupts and enables the global interrupts
  {
 	EIMSK |= (1<<INT0);
 	EICRA |= (1<<ISC00);
+	sei();
  }
-
+/*
 void disableInterrupts(void)
 {
 	EIMSK &= ~(1<<INT0);
 	EICRA &= ~(1<<ISC00);
 	cli();
-}
+}*/
 /* *****************************************************************
 Name:		init_ultrasonic()
 Inputs:		none
@@ -54,7 +55,6 @@ void init_ultrasonic(void)
 {
 	configUltrasonicPorts();
 	enable_interrupts();
-	sei();
 }
 
 /* *****************************************************************
@@ -83,7 +83,7 @@ Description:triggers measurements and plausibility checks
 			triggerUltrasonic();
 			distance_array[j] = getDistance();
 			sum +=distance_array[j];
-			_delay_ms(200);
+			_delay_ms(100);
 		}
 		dist = sum/2;
 		distance = dist;

@@ -43,7 +43,8 @@ void PwrMngmnt_init(void)
 	WDTCSR |= (1<<WDCE) | (1<<WDE);
 
 	/* set new watchdog timeout prescaler value */
-	WDTCSR = 1<<WDP0 | 1<<WDP3; /* 8.0 seconds */
+	//WDTCSR = 1<<WDP0 | 1<<WDP3; /* 8.0 seconds */
+	WDTCSR = 1<<WDP3; /* 4.0 seconds */
   
 	/* Enable global interrupts */
 	sei();

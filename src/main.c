@@ -16,7 +16,7 @@ volatile int f_wdt = 1;
 int main(void)
 {
 	/* Initialization */
-	init_ultrasonic();
+	
 	initLCD();
 	uint8_t distance = 0;
 	uint8_t diagnostics = 0;
@@ -26,6 +26,7 @@ int main(void)
 	{
 		iteration += 1;
 		/* Ultrasonic sensor */
+		init_ultrasonic();
 		distance = getDistance_main(&diagnostics);
 		
 		/* Display measurements */
@@ -34,8 +35,8 @@ int main(void)
 		displayLCD_main(3, "DTC = ", diagnostics, "NONE");
 		
 		/* Power management - processor sleep for energy reduction */
-		//PwrMngmnt_main();
-		_delay_ms(500);
+		PwrMngmnt_main();
+		//_delay_ms(500);
 	}
 }
 
