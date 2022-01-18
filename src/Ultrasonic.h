@@ -25,12 +25,22 @@
 #define SNSR_TOLERANCE 5		// cm
 
 /* Macros */
-#define U_Port_echo		PORTD
+/* Trigger pin */
 #define U_Port_trig		PORTB
-#define U_DDR_echo		DDRD
 #define U_DDR_trig		DDRB
+#define U_TRIG_pin		PINB4
+/* Echo pin */
+#define U_Port_echo		PORTD
+#define U_DDR_echo		DDRD
 #define U_ECHO_pin		PIND2
-#define U_TRIG_pin		PINB0
+/* Power pin */
+#define U_Port_pwr		PORTB
+#define U_DDR_pwr		DDRB
+#define U_PWR_pin		PINB5
+
+#define ULTR_PWR_ON		U_Port_pwr |= (1<<U_PWR_pin)
+#define ULTR_PWR_OFF	U_Port_pwr &= ~(1<<U_PWR_pin)
+
 
 /* Prototype functions */
 void configUltrasonicPorts(void);

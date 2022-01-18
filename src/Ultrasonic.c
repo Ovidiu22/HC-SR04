@@ -23,7 +23,11 @@ void configUltrasonicPorts()
 	
 	/* TRIG - output - port TRIG_pin */
 	U_DDR_trig |= (1<<U_TRIG_pin);
-	U_Port_trig &= ~(1<<U_TRIG_pin); 
+	U_Port_trig &= ~(1<<U_TRIG_pin);
+	
+	/* PWR - output - port TRIG_pin */
+	U_DDR_pwr |= (1<<U_PWR_pin);
+	U_Port_pwr &= ~(1<<U_PWR_pin);
 }
 
 /* *****************************************************************
@@ -63,7 +67,9 @@ Description:triggers measurements and plausibility checks
 	float dist = 0;
 	float distance_array[2];
 	float sum = 0;
-		
+	
+	ULTR_PWR_ON; _delay_ms(150);
+	
 	/* re-measurements for confirmation of unexpected results */
 	for (uint8_t i = 0; i <= ULTRAS_ITER_MAX; i++)
 	{
@@ -104,7 +110,7 @@ Description:triggers measurements and plausibility checks
 			break;
 		}
 	}
-
+	//ULTR_PWR_OFF;
 	return distance;
  }
 

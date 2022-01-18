@@ -5,7 +5,7 @@
 #include <avr/wdt.h>
 #include <avr/interrupt.h>
 
-
+extern int f_wdt;
 
 
 /* *****************************************************************
@@ -31,6 +31,8 @@ Description:initialization of power management / watchdog
 ******************************************************************** */
 void PwrMngmnt_init(void)
 {
+	/* Reset flag */
+	f_wdt = 0;
 	/* Disable global interrupts */
 	cli(); 
 	
